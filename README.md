@@ -2,6 +2,24 @@
 
 A rule-based bot that plays Snake on a 10×10 board. It started as a neural-network project. That failed, so I rebuilt it with simple search rules, and the rules worked far better.
 
+A real game from the current bot, 160 moves in (`@` is the head, `o` the body, `*` the food):
+
+```
++----------+
+|          |
+| ooo      |
+| o o      |
+| ooo     *|
+|@ooo      |
+| ooo      |
+| o        |
+| o        |
+| oooooo   |
+|          |
++----------+
+Score: 20  Tick: 160
+```
+
 ## How it works
 
 On every move, `bot.py` looks at each safe direction (one that doesn't hit a wall or the snake's body) and scores it on three things:
