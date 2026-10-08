@@ -1,11 +1,13 @@
-# bot.py — Rule-based Snake Bot with no rendering and no import errors
+# bot.py — rule-based Snake bot: greedy toward food, with flood-fill and
+# tail-reachability checks so it doesn't trap itself.
 
-from snake_game import SnakeGame
 import collections
+
+from snake import run_episode
 
 DIRECTIONS = ["UP", "DOWN", "LEFT", "RIGHT"]
 DIR_VEC = {"UP": (0, -1), "DOWN": (0, 1), "LEFT": (-1, 0), "RIGHT": (1, 0)}
-OPPOSITE = {"UP": "DOWN", "DOWN": "UP", "LEFT": "RIGHT", "RIGHT": "UP"}
+OPPOSITE = {"UP": "DOWN", "DOWN": "UP", "LEFT": "RIGHT", "RIGHT": "LEFT"}
 
 class SnakeBot:
     def __init__(self):
@@ -95,28 +97,11 @@ class SnakeBot:
                     q.append((nx, ny))
         return False
 
-def run_episode(bot):
-    game = SnakeGame(10, 10)
-    while game.alive and game.ticks < 1000:
-        state = {
-            "board_width": game.w,
-            "board_height": game.h,
-            "snake": tuple(game.snake),
-            "food": game.food,
-            "direction": game.direction,
-            "tick": game.ticks,
-            "score": game.score,
-        }
-        move = bot.next_move(state)
-        game.step(move)
-        game.ticks += 1
-    return game.score
-
 if __name__ == "__main__":
     scores = []
     for i in range(200):
         bot = SnakeBot()
-        score = run_episode(bot)
+        score = run_episode(bot)["score"]
         scores.append(score)
         print(f"Run {i+1}: Score = {score}")
     print(f"\nAverage Score: {sum(scores)/len(scores):.2f}")
